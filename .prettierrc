@@ -1,0 +1,24 @@
+{
+  "trailingComma": "none",
+  "apexInsertFinalNewline": false,
+  "singleQuote": true,
+  "printWidth": 140,
+  "overrides": [
+    {
+      "files": "**/classes/**/*.cls",
+      "options": { "tabWidth": 4 }
+    },
+    {
+      "files": "**/lwc/**/*.html",
+      "options": { "parser": "lwc", "tabWidth": 4, "htmlWhitespaceSensitivity": "ignore" }
+    },
+    {
+      "files": "*.{cmp,page,component}",
+      "options": { "parser": "html", "tabWidth": 4 }
+    },
+    {
+      "files": "*.{xml}",
+      "options": { "embeddedLanguageFormatting": "off" }
+    }
+  ]
+}
