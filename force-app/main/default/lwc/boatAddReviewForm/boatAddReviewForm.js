@@ -26,8 +26,6 @@ export default class BoatAddReviewForm extends LightningElement {
     set recordId(value) {
         console.log('BOATID: ', value);
         this.boatId = value;
-      //sets boatId attribute
-      //sets boatId assignment
     }
     
     // Gets user rating input from stars component
@@ -38,7 +36,13 @@ export default class BoatAddReviewForm extends LightningElement {
     // Custom submission handler to properly set Rating
     // This function must prevent the anchor element from navigating to a URL.
     // form to be submitted: lightning-record-edit-form
-    handleSubmit(event) { }
+    handleSubmit(event) {
+        event.preventDefault();
+        const fields = event.detail.fields;
+        fields.Rating__c = this.rating;
+        fields.Boat__c = this.boatId;
+        this.template.querySelector('lightning-record-edit-form').submit(fields);
+     }
     
     // Shows a toast message once form is submitted successfully
     // Dispatches event when a review is created
@@ -50,10 +54,20 @@ export default class BoatAddReviewForm extends LightningElement {
             mode: 'dismissable'
         });
         this.dispatchEvent(toast);
+        this.dispatchEvent(new CustomEvent('createreview'));
         this.handleReset();
     }
     
     // Clears form data upon submission
     // TODO: it must reset each lightning-input-field
-    handleReset() { }
+    handleReset() { 
+        const lwcInputFields = this.template.querySelectorAll(
+            'lightning-input-field'
+        );
+        if (lwcInputFields) {
+            lwcInputFields.forEach(field => {
+                field.reset();
+            });
+        }
+    }
 }
