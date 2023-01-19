@@ -13,6 +13,9 @@ const ERROR_TITLE = 'Error';
 const ERROR_VARIANT = 'error';
 
 export default class BoatSearchResults extends LightningElement {
+  _selectedBoatId;
+  _boatTypeId;
+
   @api selectedBoatId;
   @api boatTypeId = '';
   @track boats;
@@ -44,11 +47,11 @@ export default class BoatSearchResults extends LightningElement {
   searchBoats(boatTypeId) {
     this.isLoading = true;
     this.notifyLoading(true);
-    this.boatTypeId = boatTypeId;
+    this._boatTypeId = boatTypeId;
   }
 
   updateSelectedTile(event) {
-    this.selectedBoatId = event.detail.boatId;
+    this._selectedBoatId = event.detail.boatId;
     this.sendMessageService(this.selectedBoatId);
   }
 
@@ -81,6 +84,7 @@ export default class BoatSearchResults extends LightningElement {
           variant: ERROR_VARIANT,
           mode: 'dismissable'
         });
+        console.log('[ERROR]', error);
         this.dispatchEvent(toast);
       })
       .finally(() => {
@@ -90,13 +94,10 @@ export default class BoatSearchResults extends LightningElement {
 
   // Check the current value of isLoading before dispatching the doneloading or loading custom event
   notifyLoading(isLoading) {
-    console.log('HERE ENTERED');
     if (isLoading) {
-      console.log('HERE NOtIFYLOADING');
       this.dispatchEvent(new CustomEvent('loading'));
     } else {
       this.dispatchEvent(new CustomEvent('doneloading'));
-      console.log('HERE ELSE');
     }
   }
 

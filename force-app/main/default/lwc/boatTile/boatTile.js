@@ -3,6 +3,8 @@ const TILE_WRAPPER_SELECTED_CLASS = 'tile-wrapper selected';
 const TILE_WRAPPER_UNSELECTED_CLASS = 'tile-wrapper';
 
 export default class BoatTile extends LightningElement {
+  _selectedBoatId;
+
   @api boat;
 
   @api selectedBoatId;
@@ -23,7 +25,7 @@ export default class BoatTile extends LightningElement {
 
   // Fires event with the Id of the boat that has been selected.
   selectBoat() {
-    this.selectedBoatId = this.boat.Id;
+    this._selectedBoatId = this.boat.Id;
     const boatSelectEvent = new CustomEvent('boatselect', {
       detail: { boatId: this.selectedBoatId }
     });

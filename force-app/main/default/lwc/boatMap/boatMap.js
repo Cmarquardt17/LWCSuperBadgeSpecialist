@@ -10,17 +10,19 @@ const BOAT_FIELDS = [LONGITUDE_FIELD, LATITUDE_FIELD];
 export default class BoatMap extends LightningElement {
   // private
   subscription = null;
+  _boatId;
+
   @api boatId;
 
   // Getter and Setter to allow for logic to run on recordId change
   // this getter must be public
   @api
   get recordId() {
-    return this.boatId;
+    return this._boatId;
   }
   set recordId(value) {
     this.setAttribute('boatId', value);
-    this.boatId = value;
+    this._boatId = value;
   }
 
   error = undefined;
@@ -42,7 +44,7 @@ export default class BoatMap extends LightningElement {
       this.updateMap(longitude, latitude);
     } else if (error) {
       this.error = error;
-      this.boatId = undefined;
+      this._boatId = undefined;
       this.mapMarkers = [];
     }
   }
@@ -53,7 +55,7 @@ export default class BoatMap extends LightningElement {
         this.messageContext,
         BOATMC,
         (message) => {
-          this.boatId = message.recordId;
+          this._boatId = message.recordId;
         },
         { scope: APPLICATION_SCOPE }
       );

@@ -37,7 +37,6 @@ export default class FiveStarRating extends LightningElement {
   loadScript() {
     Promise.all([loadScript(this, fivestar + '/rating.js'), loadStyle(this, fivestar + '/rating.css')])
       .then(() => {
-        console.log('HELLO');
         this.initializeRating();
       })
       .catch((error) => {
